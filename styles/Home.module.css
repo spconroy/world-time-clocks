@@ -1,8 +1,11 @@
 .container {
   padding: 20px;
+  display: flex;
   text-align: center;
   background-color: #f0f0f0;
   min-height: 100vh;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .clocksContainer {
@@ -53,6 +56,12 @@
   transition: border-color 0.3s ease;
 }
 
+.clockContainer:hover {
+  border-color: #007bff; /* Changes border to blue on hover */
+  background-color: #f8f9fa; /* Light background on hover */
+  cursor: pointer;
+}
+
 .highlight {
   border-color: green;
 }
@@ -67,21 +76,29 @@
 }
 
 .hand {
+  transition: transform 0.1s ease-in-out;
   position: absolute;
   top: 50%;
   left: 50%;
   transform-origin: 0% 0%;
   background-color: #000;
+  
 }
 
 .hour {
   width: 30%;
   height: 4px;
+  background-color: #000; /* Black for hour and minute hands */
+
+  
 }
+
 
 .minute {
   width: 40%;
   height: 3px;
+  background-color: #000; /* Black for hour and minute hands */
+
 }
 
 .second {
@@ -91,6 +108,20 @@
 }
 
 .digitalClock {
-  font-size: 12px;
+  font-size: 16px;
   font-weight: bold;
+  color: #333;
 }
+
+@media (max-width: 768px) {
+  .digitalClock {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 576px) {
+  .digitalClock {
+    font-size: 12px;
+  }
+}
+

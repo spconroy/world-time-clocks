@@ -10,8 +10,8 @@ const timeZones = [
   { name: "Central Time (US)", abbreviation: "CST", id: "America/Chicago" },
   { name: "Eastern Time (US)", abbreviation: "EST", id: "America/New_York" },
   { name: "UTC", abbreviation: "UTC", id: "UTC" },
-  { name: "Greenwich Mean Time", abbreviation: "GMT", id: "Etc/GMT" }, // Constant GMT without DST
-  { name: "Western European Time", abbreviation: "WET", id: "Europe/Lisbon" }, // Correct WET with DST consideration
+  { name: "Greenwich Mean Time", abbreviation: "GMT", id: "Etc/GMT" },
+  { name: "Western European Time", abbreviation: "WET", id: "Europe/Lisbon" },
   { name: "Central European Time", abbreviation: "CET", id: "Europe/Berlin" },
   { name: "Moscow Standard Time", abbreviation: "MSK", id: "Europe/Moscow" },
   { name: "Japan Standard Time", abbreviation: "JST", id: "Asia/Tokyo" },
@@ -48,8 +48,10 @@ export default function Home() {
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState('time');
   const [filteredTimeZones, setFilteredTimeZones] = useState(timeZones);
+  const [isClient, setIsClient] = useState(false); // Add this state to track client-side rendering
 
   useEffect(() => {
+    setIsClient(true); // Set client-side rendering as true when mounted
     filterAndSort();
   }, [search, sort]);
 
@@ -59,7 +61,7 @@ export default function Home() {
       zone.abbreviation.toLowerCase().includes(search.toLowerCase())
     );
 
-    if (sort === 'time') {
+    if (isClient && sort === 'time') {
       filtered.sort((a, b) => {
         const nowA = moment.tz(a.id).format('HH:mm:ss');
         const nowB = moment.tz(b.id).format('HH:mm:ss');
