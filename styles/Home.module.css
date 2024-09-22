@@ -1,0 +1,96 @@
+.container {
+  padding: 20px;
+  text-align: center;
+  background-color: #f0f0f0;
+  min-height: 100vh;
+}
+
+.clocksContainer {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 20px;
+  justify-content: center;
+  width: 100%;
+}
+
+@media (max-width: 1200px) {
+  .clocksContainer {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .clocksContainer {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .clocksContainer {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .clocksContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 400px) {
+  .clocksContainer {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.clockContainer {
+  text-align: center;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.highlight {
+  border-color: green;
+}
+
+.clock {
+  width: 100px;
+  height: 100px;
+  border: 4px solid #000;
+  border-radius: 50%;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.hand {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: 0% 0%;
+  background-color: #000;
+}
+
+.hour {
+  width: 30%;
+  height: 4px;
+}
+
+.minute {
+  width: 40%;
+  height: 3px;
+}
+
+.second {
+  width: 45%;
+  height: 2px;
+  background-color: red;
+}
+
+.digitalClock {
+  font-size: 12px;
+  font-weight: bold;
+}
