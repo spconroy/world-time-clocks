@@ -84,6 +84,40 @@ export default function Home() {
     }
   }, [isClient]);
 
+  // Iframe height communication
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const sendHeight = () => {
+      const height = document.documentElement.scrollHeight;
+      window.parent.postMessage(
+        {
+          type: "resize",
+          height: height,
+        },
+        "*"
+      );
+    };
+
+    // Send initial height
+    sendHeight();
+
+    // Send height on every render (when clocks change)
+    const observer = new ResizeObserver(() => {
+      sendHeight();
+    });
+
+    observer.observe(document.body);
+
+    // Also send on window resize
+    window.addEventListener("resize", sendHeight);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", sendHeight);
+    };
+  }, [settings.clocks.length, showConverter]);
+
   const handleAddTimezone = (timezoneId: string) => {
     const newClock: ClockConfig = {
       id: timezoneId,
