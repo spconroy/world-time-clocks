@@ -274,6 +274,24 @@ export default function Home() {
   const visibleClocks = sortedClocks.filter((c) => !c.hidden);
   const userTimezone = isClient ? getUserTimezone() : "UTC";
 
+  // Send height to parent for iframe embedding
+  useEffect(() => {
+    const sendHeight = () => {
+      const height = document.documentElement.scrollHeight;
+      window.parent.postMessage({ type: 'resize', height }, '*');
+    };
+
+    sendHeight();
+    window.addEventListener('resize', sendHeight);
+    const observer = new MutationObserver(sendHeight);
+    observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+
+    return () => {
+      window.removeEventListener('resize', sendHeight);
+      observer.disconnect();
+    };
+  }, []);
+
   if (!isClient) {
     return null; // Prevent SSR mismatch
   }
